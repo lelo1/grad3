@@ -97,7 +97,6 @@ func NewMesh(mat *Material, vert ...float64) *Mesh {
 		copy(n[i+6:i+9], no)
 	}
 	arr := interleave(vert, 3, n, 3)
-	fmt.Println(len(arr))
 	return &Mesh{
 		vert: vert,
 		normals: n,
@@ -113,8 +112,8 @@ func NewObject(mesh ...*Mesh) *Object {
 func (m *Mesh) Render(mat gl.Mat4) {
 	s := m.mat.shader
 	s.Use()
-	s.EnableAttrib("position", m.buf, 0, 3, 6, false)
 	s.EnableAttrib("normal", m.buf, 3, 3, 6, false)
+	s.EnableAttrib("position", m.buf, 0, 3, 6, false)
 	s.SetUniform("matrix", gl.Mul4(modelview, mat))
 	c := m.mat.color
 	s.SetUniform("color", [4]float64{c.R, c.G, c.B, c.A})
