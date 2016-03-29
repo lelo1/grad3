@@ -15,6 +15,7 @@ type Color struct {
 type Material struct {
 	shader *gl.Program
 	color Color
+	specexp float64
 }
 
 type Mesh struct {
@@ -28,7 +29,16 @@ type Object struct {
 	mesh []*Mesh
 }
 
+var projection gl.Mat4
 var modelview gl.Mat4
+var light [3]float64
+var ambient Color
+var diffuse Color
+var specular Color
+
+func grey(a float64) Color {
+	return Color{a, a, a, 1}
+}
 
 func gfxInit(w, h int) {
 	sdl.Init(sdl.INIT_VIDEO)
@@ -36,6 +46,7 @@ func gfxInit(w, h int) {
 	gl.Init()
 	gl.Enable(gl.DEPTH_TEST)
 	gl.Viewport(0, 0, w, h)
+	gl.Enable(gl.CULL_FACE)
 	shaderInit()
 }
 
@@ -53,6 +64,7 @@ func SolidColor(col Color) *Material {
 	return &Material{
 		shader: defaultShader,
 		color: col,
+		specexp: 10,
 	}
 }
 
@@ -115,6 +127,12 @@ func (m *Mesh) Render(mat gl.Mat4) {
 	s.EnableAttrib("position", m.buf, 0, 3, 6, false)
 	s.EnableAttrib("normal", m.buf, 3, 3, 6, false)
 	s.SetUniform("matrix", gl.Mul4(modelview, mat))
+	s.SetUniform("projection", projection)
+	s.SetUniform("light", modelview.Apply3(light))
+	s.SetUniform("ambient", [3]float64{ambient.R, ambient.G, ambient.B})
+	s.SetUniform("diffuse", [3]float64{diffuse.R, diffuse.G, diffuse.B})
+	s.SetUniform("specular", [3]float64{specular.R, specular.G, specular.B})
+	s.SetUniform("specexp", m.mat.specexp)
 	c := m.mat.color
 	s.SetUniform("color", [4]float64{c.R, c.G, c.B, c.A})
 	gl.DrawArrays(gl.TRIANGLES, 0, len(m.vert)/3)

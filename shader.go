@@ -9,16 +9,36 @@ var vertexShader = `
 attribute vec3 position;
 attribute vec3 normal;
 uniform mat4 matrix;
+uniform mat4 projection;
+varying vec3 positiont, normalt;
 void main() {
-	gl_Position = matrix * vec4(position.xyz, 1);
+	positiont = vec3(matrix * vec4(position, 1));
+	normalt = vec3(matrix * vec4(normal, 0));
+	gl_Position = projection * vec4(positiont, 1);
 }
 `
 
 var fragmentShader = `
 #version 110
+varying vec3 positiont, normalt;
+uniform vec3 light;
+uniform vec3 specular, diffuse, ambient;
 uniform vec4 color;
+uniform float specexp;
 void main() {
-	gl_FragColor = color;
+	vec3 k, a, d, s, n, r;
+	float x;
+
+	k = color.xyz;
+	a = ambient * k;
+	
+	n = normalize(light - positiont);
+	d = max(dot(n, normalt), 0.0) * diffuse * k;
+	
+	r = reflect(-n, normalt);
+	x = max(dot(r, normalize(-positiont)), 0.0);
+	s = pow(x, specexp) * specular * k;
+	gl_FragColor = vec4(a + d + s, color.w);
 }
 `
 

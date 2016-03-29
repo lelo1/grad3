@@ -54,7 +54,7 @@ func keyboard(){
 }
 
 func draw() {
-	modelview = gl.Mul4(gl.Frustum(45, 800./600, 0.01, 100), gl.Translate(-camx, -camy, -camz))
+	modelview = gl.Translate(-camx, -camy, -camz)
 	Clear(Color{0, 0, 0, 1})
 	cube1.Render(gl.Mul4(gl.Translate(4*math.Cos(timer/50), 0, 4*math.Sin(timer/50)), gl.RotX(timer), gl.RotY(0)))
 	cube1.Render(gl.Mul4(gl.Translate(0, 4*math.Sin(timer/50), 4*math.Cos(timer/50)), gl.RotX(0), gl.RotY(timer)))
@@ -71,9 +71,14 @@ func draw() {
 
 func main() {
 	gfxInit(800, 600)
+	projection = gl.Frustum(45, 800./600, 0.01, 100)
 	tick := time.Tick(time.Second / 50)
 	NewShip(3,4,6,0)
 	
+	light = [3]float64{0, 0, 0}
+	ambient = grey(0.3)
+	diffuse = grey(0.5)
+	specular = grey(0.5)
 
 	modelsInit()
 
