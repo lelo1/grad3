@@ -46,9 +46,22 @@ func SpawnShips(){
 		NewShip(randX,randY,-30,0.2)
 		
 	}
-	if(rnd<5){
-		NewShip(camz,camy,-30,0.2)
+	if rnd==99{
+		NewShip(camx,camy,-30,0.2)
 	}
+}
+func ShipShoot(){
+	for i, b :=range ships{
+		if b.ex{
+			rnd :=rand.Intn(100)
+			if rnd < 1{
+				bx := ships[i].x
+				by := ships[i].y
+				bz := ships[i].z
+				NewBullet(bx,by,bz,0.4,1)	
+			}
+		}
+	}	
 }
 
 
