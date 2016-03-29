@@ -2,7 +2,7 @@ package main
 
 import (
 	"github.com/aiju/gl"
-	"github.com/neagix/Go-SDL/sdl"
+	"github.com/asig/Go-SDL/sdl"
 	"time"
 	"math"
 	"fmt"
@@ -82,9 +82,9 @@ func main() {
 	camy = 0.0
 	camz = 8.0
 	keys = make(map[uint32]bool)
-	for { 
-		select {
-		case ev := <- sdl.Events:
+	for {
+		<- tick
+		for _, ev := range sdl.PollEvents() {
 			switch ev := ev.(type) {
 			case sdl.QuitEvent:
 				return
@@ -96,14 +96,13 @@ func main() {
 					keys[ev.Keysym.Sym] = false
 				}
 			}
-		case <-tick:
-			keyboard()
-			draw()
-			MoveBullets()
-			SpawnShips()
-			MoveShips()
-			sdl.GL_SwapBuffers()
-			timer++
 		}
+		keyboard()
+		draw()
+		MoveBullets()
+		SpawnShips()
+		MoveShips()
+		sdl.GL_SwapBuffers()
+		timer++
 	}
 }

@@ -2,7 +2,7 @@ package main
 
 import (
 	"github.com/aiju/gl"
-	"github.com/neagix/Go-SDL/sdl"
+	"github.com/asig/Go-SDL/sdl"
 	"fmt"
 	"os"
 	"math"
@@ -112,8 +112,8 @@ func NewObject(mesh ...*Mesh) *Object {
 func (m *Mesh) Render(mat gl.Mat4) {
 	s := m.mat.shader
 	s.Use()
-	s.EnableAttrib("normal", m.buf, 3, 3, 6, false)
 	s.EnableAttrib("position", m.buf, 0, 3, 6, false)
+	s.EnableAttrib("normal", m.buf, 3, 3, 6, false)
 	s.SetUniform("matrix", gl.Mul4(modelview, mat))
 	c := m.mat.color
 	s.SetUniform("color", [4]float64{c.R, c.G, c.B, c.A})
