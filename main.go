@@ -46,7 +46,7 @@ func keyboard(){
 		}
 	}
 	if keys[sdl.K_SPACE] && reload == 0 {
-		NewBullet(camx, camy-0.3, camz,0.3)
+		NewBullet(camx, camy-0.3, camz,0.3,0)
 		reload = 10
 	}else if(reload > 0){
 		reload--
@@ -107,6 +107,7 @@ func main() {
 		MoveBullets()
 		SpawnShips()
 		MoveShips()
+		ShipShoot()
 		sdl.GL_SwapBuffers()
 		timer++
 	}

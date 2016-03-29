@@ -5,7 +5,7 @@ import (
  )
 
 
-var cube1, cube2,bullet, pyr1,modShip1 *Object
+var cube1, cube2,bulletPl, pyr1,modShip1,bulletEn1 *Object
 var cyl *Mesh
 
 var red, green,blue,yellow *Material 
@@ -17,8 +17,9 @@ func modelsInit() {
 	yellow = SolidColor(Color{1, 1, 0, 1})
 
 	cube2 = cube(yellow)
- 	bullet = cube(blue)
- 	cyl = cylinder(yellow)
+ 	bulletPl = cube(blue)
+ 	bulletEn1 = cube(red)
+	cyl = cylinder(yellow)
 	spezModel()
 }
 
