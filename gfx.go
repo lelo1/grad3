@@ -99,7 +99,7 @@ func interleave(a []float64, na int, b []float64, nb int) []float64 {
 
 func NewMesh(mat *Material, vert ...float64) *Mesh {
 	if len(vert) % 9 != 0 {
-		panic("NewMesh: number of vertices not divisible by 9")
+		panic("NewMesh: number of coordinates not divisible by 9")
 	}
 	n := make([]float64, len(vert))
 	for i := 0; i < len(vert); i += 9 {
@@ -112,6 +112,22 @@ func NewMesh(mat *Material, vert ...float64) *Mesh {
 	return &Mesh{
 		vert: vert,
 		normals: n,
+		buf: gl.NewBuffer(gl.ARRAY_BUFFER, arr, gl.STATIC_DRAW),
+		mat: mat,
+	}
+}
+
+func NewMeshNorm(mat *Material, vert []float64, norm []float64) *Mesh {
+	if len(vert) % 9 != 0 {
+		panic("NewMeshNorm: number of coordinates not divisible by 9")
+	}
+	if len(vert) != len(norm) {
+		panic("NewMeshNorm: different numbers for vertices and normals")
+	}
+	arr := interleave(vert, 3, norm, 3)
+	return &Mesh{
+		vert: vert,
+		normals: norm,
 		buf: gl.NewBuffer(gl.ARRAY_BUFFER, arr, gl.STATIC_DRAW),
 		mat: mat,
 	}

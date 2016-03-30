@@ -32,14 +32,38 @@ func modelsInit() {
 //Funktionen
 func cylinder(m *Material) *Mesh {
 	l := []float64{}
+	n := []float64{}
 	s := 2*math.Pi/64
+	h := 1.0
 	for a := 0.0; a < 2*math.Pi; a += s {
 		l = append(l,
-			0, 0, 0,
+			-h, math.Cos(a), math.Sin(a),
+			-h, 0, 0,
+			-h, math.Cos(a+s), math.Sin(a+s),
+			h, 0, 0,
+			h, math.Cos(a), math.Sin(a),
+			h, math.Cos(a+s), math.Sin(a+s),
+			h, math.Cos(a+s), math.Sin(a+s),
+			h, math.Cos(a), math.Sin(a),
+			-h, math.Cos(a), math.Sin(a),
+			h, math.Cos(a+s), math.Sin(a+s),
+			-h, math.Cos(a), math.Sin(a),
+			-h, math.Cos(a+s), math.Sin(a+s))
+		n = append(n,
+			-h, 0, 0,
+			-h, 0, 0,
+			-h, 0, 0,
+			h, 0, 0,
+			h, 0, 0,
+			h, 0, 0,
+			0, math.Cos(a+s), math.Sin(a+s),
+			0, math.Cos(a), math.Sin(a),
+			0, math.Cos(a), math.Sin(a),
+			0, math.Cos(a+s), math.Sin(a+s),
 			0, math.Cos(a), math.Sin(a),
 			0, math.Cos(a+s), math.Sin(a+s))
 	}
-	return NewMesh(m, l...)
+	return NewMeshNorm(m, l, n)
 }
 func cube(m *Material) *Object {
 	return NewObject(NewMesh(m,
