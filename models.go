@@ -6,7 +6,7 @@ import (
 
 
 var cube1, cube2,bulletPl, pyr1,modShip1,bulletEn1 *Object
-var cyl *Mesh
+var cyl,affe,perfCyl *Mesh
 
 var red, green,blue,yellow *Material 
 
@@ -20,6 +20,8 @@ func modelsInit() {
  	bulletPl = cube(blue)
  	bulletEn1 = cube(red)
 	cyl = cylinder(yellow)
+	affe = ReadModel("Affe.ply",blue)
+	perfCyl = ReadModel("perfCyl.ply",green)
 	spezModel()
 }
 
@@ -50,16 +52,16 @@ func cube(m *Material) *Object {
 		1, -1, -1,
 
 		-1, -1, 1,
-		-1, 1, 1,
 		1, 1, 1,
+		-1, 1, 1,
 
 		-1, -1, 1,
-		1, 1, 1,
 		1, -1, 1,
+		1, 1, 1,
 		
 		-1, -1, -1,
-		-1, 1, -1,
 		-1, 1, 1,
+		-1, 1, -1,
 
 		-1, -1, -1,
 		-1 , -1, 1,
@@ -70,12 +72,12 @@ func cube(m *Material) *Object {
 		1, 1, 1,
 
 		1, -1, -1,
-		1 , -1, 1,
-		1 ,1 ,1,	
+		1 ,1 ,1,
+		1 , -1, 1,	
 																																						
 		-1, 1, -1,
-		1, 1, -1,
 		1, 1, 1,
+		1, 1, -1,
 
 		-1, 1, -1,
 		-1, 1, 1,
@@ -86,8 +88,8 @@ func cube(m *Material) *Object {
 		1, -1, 1,
 
 		-1, -1, -1,
-		-1, -1, 1,
 		1, -1, 1,
+		-1, -1, 1,
 	))
 }
 func pyr(m *Material) *Object {
@@ -131,12 +133,12 @@ func spezModel(){
 		1, -1, -1,
 
 		-1, -1, 1,
-		-1, 1, 1,
 		1, 1, 1,
+		-1, 1, 1,
 
 		-1, -1, 1,
-		1, 1, 1,
 		1, -1, 1,
+		1, 1, 1,
 	), NewMesh(green,
 		-1, -1, -1,
 		-1, 1, -1,
@@ -208,8 +210,8 @@ func spezModel(){
 		
 	), NewMesh(blue,
 		-1,-1,-1,
-		0 ,1 ,0,
 		-1, -1, 1,
+		0 ,1 ,0,
 	), NewMesh(yellow,
 		-1, -1, -1,
 		0, 1, 0,

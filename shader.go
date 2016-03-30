@@ -26,16 +26,17 @@ uniform vec3 specular, diffuse, ambient;
 uniform vec4 color;
 uniform float specexp;
 void main() {
-	vec3 k, a, d, s, n, r;
+	vec3 k, a, d, s, n, nn, r;
 	float x;
 
 	k = color.xyz;
 	a = ambient * k;
 	
 	n = normalize(light - positiont);
-	d = max(dot(n, normalt), 0.0) * diffuse * k;
+	nn = normalize(normalt);
+	d = max(dot(n, nn), 0.0) * diffuse * k;
 	
-	r = reflect(-n, normalt);
+	r = reflect(-n, nn);
 	x = max(dot(r, normalize(-positiont)), 0.0);
 	s = pow(x, specexp) * specular * k;
 	gl_FragColor = vec4(a + d + s, color.w);
