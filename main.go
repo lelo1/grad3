@@ -68,7 +68,8 @@ func draw() {
 	//pyr1.Render(gl.Mul4(gl.Translate(0, 2.2, 0), gl.RotX(0), gl.RotY(timer), gl.Scale(0.5,0.5,0.5)))	
 	//cyl.Render(gl.Mul4(gl.Translate(0, 0, 0), gl.RotX(timer), gl.RotY(timer),gl.Scale(1.7,1.7,1.7)))
 	//ring.Render(gl.RotX(timer))
-	affe.Render(gl.RotX(timer))
+	//affe.Render(gl.RotX(90))
+	test.Render(gl.Mul4(gl.RotX(0),gl.RotY(timer)))
 	//perfCyl.Render(gl.RotX(timer))
 	DrawBullets()
 	DrawShips()
@@ -82,7 +83,7 @@ func main() {
 	NewShip(3,4,6,0)
 	
 	light = [3]float64{2, 0, 0}
-	ambient = grey(0.2)
+	ambient = grey(0.1)
 	diffuse = grey(0.5)
 	specular = grey(0.5)
 
@@ -110,7 +111,7 @@ func main() {
 			}
 		}
 		keyboard()
-		light = [3]float64{camx, camy, camz}
+		light = [3]float64{camx, camy+3, camz}
 		draw()
 		MoveBullets()
 		SpawnShips()

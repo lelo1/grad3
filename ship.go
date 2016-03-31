@@ -24,7 +24,7 @@ func NewShip(x, y, z,speed float64){
 func DrawShips() {
 	for _, b := range ships {
 		if b.ex {
-			modShip1.Render(gl.Mul4(gl.Translate(b.x, b.y, b.z),gl.RotX(270), gl.RotY(timer),gl.Scale(0.5,2,0.5)))
+			modShip1.Render(gl.Mul4(gl.Translate(b.x, b.y, b.z),gl.RotX(0),gl.RotZ(90), gl.RotY(-90),gl.Scale(0.5,0.5,0.5)))
 		}
 	}
 }

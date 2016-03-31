@@ -5,8 +5,8 @@ import (
  )
 
 
-var cube1, cube2,bulletPl, pyr1,modShip1,bulletEn1 *Object
-var cyl,affe,perfCyl *Mesh
+var cube1, cube2,bulletPl, pyr1,bulletEn1 *Object
+var cyl,affe,perfCyl,test,modShip1 *Mesh
 
 var red, green,blue,yellow *Material 
 
@@ -22,6 +22,7 @@ func modelsInit() {
 	cyl = cylinder(yellow)
 	affe = ReadModel("Affe.ply",blue)
 	perfCyl = ReadModel("perfCyl.ply",green)
+	test = ReadModel("test.ply",yellow)
 	spezModel()
 }
 
@@ -223,7 +224,8 @@ func spezModel(){
 		1, -1, 1,
 		0, 1, 0,
 	))
-	modShip1 = NewObject(NewMesh(red,
+	modShip1 = ReadModel("ship1.ply",blue)
+	/*NewObject(NewMesh(red,
 		-1, -1, -1,
 		1, -1, -1,
 		1, -1, 1,
@@ -248,7 +250,7 @@ func spezModel(){
 		-1, -1, 1,
 		1, -1, 1,
 		0, 1, 0,
-	))
+	))*/
 }
 
 
