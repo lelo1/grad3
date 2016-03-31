@@ -43,11 +43,16 @@ func ReadModel(filename string, mat *Material) *Mesh {
 	}
 	vertices := make([][3]float64, nvertex)
 	faces := make([][3]int, nface)
+	normals := make([][3]float64, nvertex)
 	for i := 0; i < nvertex; i++ {
 		l = modelline(f)
 		vertices[i][0],_ = strconv.ParseFloat(l[0], 64)
 		vertices[i][1],_ = strconv.ParseFloat(l[1], 64)
 		vertices[i][2],_ = strconv.ParseFloat(l[2], 64)
+		normals[i][0],_ = strconv.ParseFloat(l[3], 64)
+		normals[i][1],_ = strconv.ParseFloat(l[4], 64)
+		normals[i][2],_ = strconv.ParseFloat(l[5], 64)
+		
 	}
 	for i := 0;i < nface; i++{
 		l = modelline(f)
@@ -60,14 +65,16 @@ func ReadModel(filename string, mat *Material) *Mesh {
 		}
 	}  
 	points := make([]float64, nface*9)
+	pointsNormals := make([]float64, nface*9)
 	for i := 0; i < nface;i++{
 		for j := 0; j < 3; j++{
 			for k:= 0; k < 3; k++{			
 				points [i * 9 + 3 * j + k] = vertices[faces[i][j]][k]
+				pointsNormals [i * 9 + 3 * j + k] = normals[faces[i][j]][k]
 			}
 
 }		 
 	}
 	_ = fmt.Print
-	return NewMesh(mat, points...)
+	return NewMeshNorm(mat, points,pointsNormals)
 }

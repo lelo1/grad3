@@ -58,7 +58,8 @@ func ShipShoot(){
 				bx := ships[i].x
 				by := ships[i].y
 				bz := ships[i].z
-				NewBullet(bx,by,bz,0.4,1)	
+				NewBullet(bx+0.5,by,bz,0.4,1)	
+				NewBullet(bx-0.5,by,bz,0.4,1)
 			}
 		}
 	}	
